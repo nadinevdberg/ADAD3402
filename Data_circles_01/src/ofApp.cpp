@@ -1,28 +1,31 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
+
 	ofSetCircleResolution(50);
 	font.load("ABeeZee-Regular.ttf", 150);
 	ofSetBackgroundColor(ofColor::black);
 
-	string databasePath = ofToDataPath("carbondioxide.sqlite", true); // add database here
+	string databasePath = ofToDataPath("carbondioxide.sqlite", true); // tried .db, not working
 	db = new SQLite::Database(databasePath);
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
 
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
+
 	SQLite::Statement query(*db, "SELECT * FROM carbon WHERE year=?"); //make sure names are correct
+
 	int year = years[currentYear];
 
 	ofLog() << "current selected year = " << year << endl;
 
-	query.bind(1, year); 
+	query.bind(1, year);
 
 	while (query.executeStep()) {
 		ofLog() << query.getColumn("year") << " "
@@ -40,7 +43,7 @@ void ofApp::draw(){
 
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void ofApp::mouseMoved(int x, int y) {
 	currentYear = ofMap(x, 0, ofGetWidth(), 0, 7);
 	jaartal = ofToString(roundf(ofMap(x, 0, ofGetWidth(), years[0], years[6])));
 }
