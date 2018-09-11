@@ -7,7 +7,7 @@ void ofApp::setup() {
 	font.load("ABeeZee-Regular.ttf", 150);
 	ofSetBackgroundColor(ofColor::black);
 
-	string databasePath = ofToDataPath("carbondioxide.sqlite", true); // tried .db, not working
+	string databasePath = ofToDataPath("carbon.db", true); 
 	db = new SQLite::Database(databasePath);
 }
 
