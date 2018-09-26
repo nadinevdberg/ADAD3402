@@ -12,11 +12,19 @@ public:
 	void mouseMoved(int x, int y);
 
 private:
-	int currentYear = 0;
-	int years[7] = { 2006, 2008, 2010, 2012, 2014, 2016, 2018 };
+	int currentYear;
+	int years[13] = { 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 };
+
+	int minYear;
+	int maxYear;
+	int minCarb;
+	int maxCarb;
 
 	float currentCarbon;
 
 	SQLite::Database* db;
+
+	ofTrueTypeFont font;
+
 
 };
