@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "SQLiteCpp.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp {
 
@@ -27,13 +28,19 @@ private:
 
 	ofTrueTypeFont font;
 
-	// variables for perlin noise terrain
-	int cols;
-	int rows;
-	int scl = 20;
-	float yoff;
-	float xoff;
-	float flying = 0;
-	float movement = 0; 
-	ofVec2f terrain; 
+	// variables for noise based on 'NoiseExample', found on https://forum.openframeworks.cc/t/flowing-perlin-noise-effect/24636
+	ofShader noiseShader[9];
+	ofVec2f noiseStep; 
+	ofPlanePrimitive plane[9];
+	ofSpherePrimitive sphere[9];
+	ofEasyCam cam;
+
+	ofxPanel GUI;
+	ofxFloatSlider noiseScaleX, noiseScaleY, noiseIncrement1, noiseIncrement2, map1, map2;
+	ofxIntSlider bSmooth;
+	ofParameterGroup periodicNoise;
+	ofParameter<float> periodic1, periodic2, periodic3, periodic4;
+	ofxToggle b3Dview;
+	bool bDrawGUI;
+	
 };

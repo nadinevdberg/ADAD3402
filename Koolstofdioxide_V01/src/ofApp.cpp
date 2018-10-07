@@ -5,11 +5,61 @@ void ofApp::setup() {
 	ofSetBackgroundColor(ofColor::black);
 	font.load("gilroy-light.otf", 24);
 
-	// perlin noise terrain 
-	cols = ofGetWidth() / scl; 
-	rows = ofGetHeight() / scl;
-	terrain.set(cols, rows);
+	ofDisableArbTex();
+	noiseShader[0].load("shaders/vertex.vert", "shaders/classicnoise2D.frag");
+	noiseShader[1].load("shaders/vertex.vert", "shaders/classicnoise3D.frag");
+	noiseShader[2].load("shaders/vertex.vert", "shaders/classicnoise4D.frag");
+	noiseShader[3].load("shaders/vertex.vert", "shaders/classicnoise2D.frag");
+	noiseShader[4].load("shaders/vertex.vert", "shaders/classicnoise3D.frag");
+	noiseShader[5].load("shaders/vertex.vert", "shaders/classicnoise4D.frag");
+	noiseShader[6].load("shaders/vertex.vert", "shaders/noise2D.frag");
+	noiseShader[7].load("shaders/vertex.vert", "shaders/noise3D.frag");
+	noiseShader[8].load("shaders/vertex.vert", "shaders/noise4D.frag");
 
+	noiseStep = ofVec2f(0, 0);
+
+	int i = 0;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			plane[i].set(300, 300, 2, 2);
+			plane[i].setPosition(150 + 300 * x, 150 + 300 * y, 0);
+			i++;
+		}
+	}
+
+	i = 0;
+	int xP = -250, yP = 250;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			sphere[i].set(150,1);
+			sphere[i].setPosition(xP, yP, 0);
+			xP += 250;
+			i++;
+		}
+		yP -= 250;
+		xP = -250;
+	}
+	// Create the GUI panel
+	GUI.setup();
+	GUI.setName("Noise Settings");
+	GUI.add(noiseScaleX.setup("Scale X", 1.f, .0f, 5.f));
+	GUI.add(noiseScaleY.setup("Scale Y", 1.f, .0f, 5.f));
+	GUI.add(noiseIncrement1.setup("Increment 1", .01f, .0f, .1f));
+	GUI.add(noiseIncrement2.setup("Increment 2", .01f, .0f, .1f));
+	GUI.add(map1.setup("Map min", .0f, .0f, 1.f));
+	GUI.add(map2.setup("Map max", 1.f, .0f, 1.f));
+	GUI.add(bSmooth.setup("Smooth", 0, 0, 1));
+
+	periodicNoise.setName("Periodic Noise");
+	periodicNoise.add(periodic1.set("P1", .0f, .0f, 1.f));
+	periodicNoise.add(periodic2.set("P2", .0f, .0f, 1.f));
+	periodicNoise.add(periodic3.set("P3", .0f, .0f, 1.f));
+	periodicNoise.add(periodic4.set("P4", .0f, .0f, 1.f));
+	GUI.add(periodicNoise); 
+
+	GUI.add(b3Dview.setup("3D View", false));
+
+	bDrawGUI = true;
 
 	// setup for using database
 	string databasePath = ofToDataPath("carbon.db", true);
@@ -35,21 +85,7 @@ void ofApp::draw() {
 	ofSetColor(ofColor::white);
 	ofNoFill();
 
-	flying += 0.005;
-	movement += 0.005;
-	yoff = flying;
-	xoff = movement;
 
-	for (int y = 0; y < rows; y++) {
-		yoff = 0;
-		for (int x = 0; x < cols; x++) {
-			terrain.set(ofMap(ofNoise(xoff, yoff), 0, 1, -250, 200));
-			xoff += 0.05;
-		}
-		yoff += 0.05;
-	}
-
-	// find a way to get trianglestrip (grid)
 
 
 	SQLite::Statement query(*db, "SELECT * FROM carbon WHERE year=?");
