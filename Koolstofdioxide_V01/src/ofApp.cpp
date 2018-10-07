@@ -31,7 +31,7 @@ void ofApp::setup() {
 	int xP = -250, yP = 250;
 	for (int y = 0; y < 3; y++) {
 		for (int x = 0; x < 3; x++) {
-			sphere[i].set(150,1);
+			sphere[i].set(150, 1);
 			sphere[i].setPosition(xP, yP, 0);
 			xP += 250;
 			i++;
@@ -55,7 +55,7 @@ void ofApp::setup() {
 	periodicNoise.add(periodic2.set("P2", .0f, .0f, 1.f));
 	periodicNoise.add(periodic3.set("P3", .0f, .0f, 1.f));
 	periodicNoise.add(periodic4.set("P4", .0f, .0f, 1.f));
-	GUI.add(periodicNoise); 
+	GUI.add(periodicNoise);
 
 	GUI.add(b3Dview.setup("3D View", false));
 
@@ -76,11 +76,54 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
+	ofSetWindowTitle(ofToString(ofGetFrameRate()));
+	noiseStep.x += noiseIncrement1;
+	noiseStep.y += noiseIncrement2;
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+
+	if (!b3Dview) {
+		for (int i = 0; i < 9; i++) {
+			noiseShader[i].begin();
+			noiseShader[i].setUniform1i("b2D3D", 0);
+			noiseShader[i].setUniform2f("scale", noiseScaleX, noiseScaleY);
+			noiseShader[i].setUniform2f("steps", noiseStep);
+			noiseShader[i].setUniform1i("bSmooth", bSmooth);
+			if (i <= 2) noiseShader[i].setUniform1i("bType", 0);
+			else if (i >= 3 && i <= 5) {
+				noiseShader[i].setUniform1i("bType", 1);
+				float timeF = ofGetElapsedTimef();
+				noiseShader[i].setUniform4f("periodicValue", periodic1, periodic2, periodic3, periodic4);
+			}
+			plane[i].draw();
+			noiseShader[i].end();
+		}
+	}
+
+	if (b3Dview) {
+		for (int i = 0; i < 9; i++) {
+			cam.begin();
+			noiseShader[i].begin();
+			noiseShader[i].setUniform1i("b2D3D", 1);
+			noiseShader[i].setUniform2f("scale", noiseScaleX, noiseScaleY);
+			noiseShader[i].setUniform2f("steps", noiseStep);
+			noiseShader[i].setUniform2f("map", map1, map2);
+			noiseShader[i].setUniform1i("bSmooth", bSmooth);
+			if (i <= 2) noiseShader[i].setUniform1i("bType", 0);
+			else if (i >= 3 && i <= 5) {
+				noiseShader[i].setUniform1i("bType", 1);
+				float timeF = ofGetElapsedTimef();
+				noiseShader[i].setUniform4f("periodValue", periodic1, periodic2, periodic3, periodic4);
+			}
+			//sphere[i].draw;
+			noiseShader[i].end();
+			cam.end();
+			ofDisableDepthTest();
+		}
+}
 
 	ofSetColor(ofColor::white);
 	ofNoFill();
@@ -98,7 +141,7 @@ void ofApp::draw() {
 
 
 	while (query.executeStep()) {
-		
+
 
 
 		currentCarbon = ofLerp(currentCarbon, query.getColumn("carbon").getInt(), 0.05);

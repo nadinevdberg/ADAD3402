@@ -33,6 +33,7 @@ private:
 	ofVec2f noiseStep; 
 	ofPlanePrimitive plane[9];
 	ofSpherePrimitive sphere[9];
+	ofBoxPrimitive box[9];
 	ofEasyCam cam;
 
 	ofxPanel GUI;
