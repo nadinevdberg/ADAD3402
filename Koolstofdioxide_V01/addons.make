@@ -1,0 +1,3 @@
+ofxGui
+ofxJSON-master
+ofxSQLiteCpp
