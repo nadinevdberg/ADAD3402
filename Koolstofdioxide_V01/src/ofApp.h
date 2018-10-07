@@ -11,6 +11,7 @@ public:
 	void update();
 	void draw();
 	void mouseMoved(int x, int y);
+	void keyPressed(int key);
 
 
 private:
@@ -30,7 +31,7 @@ private:
 
 	// variables for noise based on 'NoiseExample', found on https://forum.openframeworks.cc/t/flowing-perlin-noise-effect/24636
 	ofShader noiseShader[9];
-	ofVec2f noiseStep; 
+	ofVec2f noiseStep;
 	ofPlanePrimitive plane[9];
 	ofSpherePrimitive sphere[9];
 	ofBoxPrimitive box[9];
@@ -43,5 +44,5 @@ private:
 	ofParameter<float> periodic1, periodic2, periodic3, periodic4;
 	ofxToggle b3Dview;
 	bool bDrawGUI;
-	
+
 };

@@ -118,12 +118,18 @@ void ofApp::draw() {
 				float timeF = ofGetElapsedTimef();
 				noiseShader[i].setUniform4f("periodValue", periodic1, periodic2, periodic3, periodic4);
 			}
-			//sphere[i].draw;
+			sphere[i].draw();
 			noiseShader[i].end();
 			cam.end();
 			ofDisableDepthTest();
 		}
-}
+	}
+
+	if (bDrawGUI) GUI.draw();
+
+	ofDrawBitmapStringHighlight("Classic: 2D\t\t\t     3D\t\t\t\t\t   4D", 10, 294);
+	ofDrawBitmapStringHighlight("Classic Periodic: 2D\t\t     3D\t\t\t\t\t   4D", 10, 594);
+	ofDrawBitmapStringHighlight("Simplex: 2D\t\t\t     3D\t\t\t\t\t   4D", 10, 894);
 
 	ofSetColor(ofColor::white);
 	ofNoFill();
@@ -160,5 +166,12 @@ void ofApp::draw() {
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
 	currentYear = ofMap(x, 0, ofGetWidth(), 0, 25);
+}
+
+void ofApp::keyPressed(int key)
+{
+	if (key == ' ') {
+		bDrawGUI = !bDrawGUI;
+	}
 }
 
