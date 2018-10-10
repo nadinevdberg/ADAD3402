@@ -38,7 +38,7 @@ void ofApp::draw() {
 	int maxVal = 80;
 
 
-	
+
 
 	while (query.executeStep()) {
 		// ofLog() << query->getColumn("carbon") << endl;
@@ -46,7 +46,7 @@ void ofApp::draw() {
 
 		currentCarbon = ofLerp(currentCarbon, query.getColumn("carbon").getInt(), 0.05);
 		ofFill();
-		ofSetColor(ofColor::dimGray,ofMap(currentCarbon, minCarb, maxCarb,minVal, maxVal, true));
+		ofSetColor(ofColor::dimGray, ofMap(currentCarbon, minCarb, maxCarb, minVal, maxVal, true));
 		ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofMap(currentCarbon, minCarb, maxCarb, 120, 500, true));
 
 		ofSetColor(ofColor::darkSlateGrey, ofMap(currentCarbon, minCarb, maxCarb, minVal, maxVal, true));
@@ -58,7 +58,7 @@ void ofApp::draw() {
 		ofSetColor(ofColor::black);
 		ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ofMap(currentCarbon, minCarb, maxCarb, 100, 350, true));
 
-		
+
 		ofNoFill();
 		ofSetColor(ofColor::darkGrey);
 		ofDrawSphere(ofGetWidth() / 2, ofGetHeight() / 2, ofMap(currentCarbon, minCarb, maxCarb, 100, 300, true));
@@ -67,9 +67,9 @@ void ofApp::draw() {
 		ofSetColor(ofColor::khaki);
 		font.drawString(ofToString(year), ofGetWidth() / 10, ofGetHeight() / 10);
 		font.drawString("Average CO2: " + ofToString(currentCarbon), ofGetWidth() / 10, ofGetWidth() / 10 + 5);
-	
-	
-}
+
+
+	}
 
 }
 
