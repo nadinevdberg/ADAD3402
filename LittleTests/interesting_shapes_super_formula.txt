@@ -1,0 +1,35 @@
+Interesting results with the super shape formula:
+
+
+# shape 1 
+m += 0.05;
+  for (int i = 0; i < total+1; i++){
+      float lat = map(i, 0, total,-HALF_PI, HALF_PI);
+      float r2 = superShape(lat, m, 0.479, 30.2539, 50); 
+      for (int j = 0; j < total+1; j++){
+        float lon = map(j, 0, total, -PI, PI);
+        float r1 = superShape(lon, m,28, 30.2539, 0.3563); 
+       
+        float x = r * r1 * cos(lon) * r2 * cos(lat);
+        float y = r * r1 * sin(lon) * r2 * cos(lat);
+        float z = r * r2 * sin(lat);
+      
+        globe[i][j] = new PVector(x, y, z);
+
+
+# shape 2
+ m = map(cos(mchange), -1, 1, 0, 1);
+  mchange += 0.03;
+  //m = mchange;
+  for (int i = 0; i < total+1; i++){
+      float lat = map(i, 0, total,-HALF_PI, HALF_PI);
+      float r2 = superShape(lat, m, -0.68, -0.68, -0.68); 
+      for (int j = 0; j < total+1; j++){
+        float lon = map(j, 0, total, -PI, PI);
+        float r1 = superShape(lon, m, 15.24, 0.35, 49.59); 
+       
+        float x = r * r1 * cos(lon) * r2 * cos(lat);
+        float y = r * r1 * sin(lon) * r2 * cos(lat);
+        float z = r * r2 * sin(lat);
+      
+        globe[i][j] = new PVector(x, y, z);

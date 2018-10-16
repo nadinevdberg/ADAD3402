@@ -29,7 +29,7 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	ofLog() << "current increment value = " << incr << endl;
+	
 	/*vector<ofVec3f>& verts = planet.getVertices();
 	for (unsigned int i = 0; i < verts.size(); i++) {
 		verts[i].x += ofSignedNoise(verts[i].x*ofRandom(-1., 1), verts[i].y / ofRandom(-1., 1), verts[i].z / ofRandom(-1., 1), ofGetElapsedTimef());
@@ -45,7 +45,7 @@ void ofApp::update() {
 			int index = x + 50 * y;
 
 			ofPoint vertex = planetTest.getVertex(index);
-			vertex.z = ofNoise(x*incr, y*incr, ofGetElapsedTimef()*incr) * 100;
+			vertex.z = ofNoise(x*0.05, y*0.05, ofGetElapsedTimef()*0.05) * 100;
 
 			planetTest.setVertex(index, vertex);
 		}
@@ -58,7 +58,7 @@ void ofApp::update() {
 			int index = x + 50 * y;
 
 			ofPoint vertex = mesh.getVertex(index);
-			vertex.z = ofNoise(x*0.05, y*0.05, ofGetElapsedTimef()*0.05) * 100;
+			vertex.z = ofNoise(x*incr, y*incr, ofGetElapsedTimef()*incr) * 100;
 
 			mesh.setVertex(index, vertex);
 		}
@@ -80,13 +80,15 @@ void ofApp::draw() {
 void ofApp::keyPressed(int key)
 {
 
-	if (key == 'a') {
+	if (key == '+') {
 		incr += 0.01;
 		ofLog() << "increasing" << endl;
+		ofLog() << "current increment value = " << incr << endl;
 	}
 	if (key == '-') {
 		incr -= 0.01;
 		ofLog() << "decreasing" << endl;
+		ofLog() << "current increment value = " << incr << endl;
 	}
 }
 

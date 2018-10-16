@@ -1,0 +1,9 @@
+Color palletes
+
+# dark grey
+
+      float hu = map(i, 0, total, 0, 31);
+      float sa = map(i, 0, total, 0, 53);
+      float br = map(i, 0, total, 26, 36);
+      fill((hu%255), sa, br);
+
