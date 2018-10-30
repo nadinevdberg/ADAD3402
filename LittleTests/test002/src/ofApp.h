@@ -17,5 +17,6 @@ public:
 	ofSpherePrimitive sphere;
 
 	float incr;
+	int alpha;
 
 };

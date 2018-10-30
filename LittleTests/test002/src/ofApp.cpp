@@ -10,8 +10,9 @@ ofMesh planet;
 void ofApp::setup() {
 	ofLog() << "started application" << endl;
 
-	incr = 0.01;
-	image.load("smoke.jpg");
+	incr = 0.1;
+	alpha = 255;
+	image.load("smoke2.jpg");
 
 	plane.set(WIDTH, HEIGHT);
 	plane.setResolution(50, 50);
@@ -68,6 +69,11 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 	ofBackground(ofColor::black);
+	//ofColor brown(91, 86, 71, alpha);
+	//ofSetColor(brown);
+	//ofFill();
+	//ofDrawRectangle(0, 0, 1920, 1080);
+
 
 	cam.begin();
 	image.bind();
@@ -82,11 +88,14 @@ void ofApp::keyPressed(int key)
 
 	if (key == '+') {
 		incr += 0.01;
+		alpha -= 10;
 		ofLog() << "increasing" << endl;
 		ofLog() << "current increment value = " << incr << endl;
+		
 	}
 	if (key == '-') {
 		incr -= 0.01;
+		alpha += 10;
 		ofLog() << "decreasing" << endl;
 		ofLog() << "current increment value = " << incr << endl;
 	}
